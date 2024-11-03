@@ -58,7 +58,10 @@ fun EmojiReleaseApp(
         factory = EmojiScreenViewModel.Factory
     )
 ) {
+
+    // THis collects the theme
     val isDarkTheme by emojiViewModel.isDarkTheme.collectAsState()
+    // Create a courotine scope for suspend function
     val coroutineScope = rememberCoroutineScope()
 
     DataStoreDemoTheme(darkTheme = isDarkTheme) {
@@ -66,6 +69,7 @@ fun EmojiReleaseApp(
             uiState = emojiViewModel.uiState.collectAsState().value,
             selectLayout = emojiViewModel::selectLayout,
             toggleTheme = { isDark ->
+                // Launch courintine
                 coroutineScope.launch {
                     emojiViewModel.toggleTheme(isDark)
                 }
@@ -100,7 +104,7 @@ private fun EmojiScreen(
                             tint = MaterialTheme.colorScheme.onBackground
                         )
                     }
-                    //add switch
+                    //add switch to go back and forth between dark and light
                     Switch(
                         checked = isDarkTheme,
                         onCheckedChange = { toggleTheme(it)}
